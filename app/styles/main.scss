@@ -1,0 +1,115 @@
+// bower:scss
+// endbower
+
+@mixin centerer {
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+
+}
+
+$blockColors: red, orange, yellow, green, blue, purple;
+
+
+body {
+
+    background: #fafafa;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+
+}
+
+.container {
+
+    position: absolute;
+    width: 800px;
+    height: 300px;
+    background: #eee;
+    border-radius: 5px;
+    @include centerer;
+
+
+    .block {
+        width: 100px;
+        height: 300px;
+        position: absolute;
+        bottom: 0;
+        border-radius: 1px;
+
+        // transition: height 0.2s linear;
+    }
+
+    @for $i from 1 through length($blockColors) {
+        .block:nth-child(#{length($blockColors)}n+#{$i}) {
+            left: 100px * $i;
+            .ui-slider-range {
+                background: nth($blockColors, $i);
+            }
+        }
+    }
+
+}
+
+
+
+
+
+
+/* bar slider styles */
+.block {
+    height: 300px;
+    border: none;
+    border-radius: 0;
+    border-bottom: 2px solid #ff0000;
+    background-color: transparent;
+}
+.ui-widget-header {
+    border-radius: 0;
+    background-image: none;
+    background-color: #ff0000;
+}
+.ui-slider .ui-slider-handle {
+    position: absolute;
+    text-align: center;
+    border: none;
+  text-decoration: none;
+    bottom: 0%;
+  cursor: ns-resize;
+}
+.ui-slider-vertical .ui-slider-handle {
+    margin: 0 0 8px 0;
+    left: 47px;
+    width: 0;
+    height: 0;
+}
+.ui-slider-vertical .ui-slider-handle::before {
+    content:attr(data-acr);
+    color: #ccc;
+    margin-left: -15px;
+    margin-top: -20px;
+    position: absolute;
+
+    display: none
+}
+.ui-slider-vertical .ui-slider-handle:focus {
+    outline: none;
+}
+.ui-corner-all {
+    border: none;
+}
+
+.CTR-button {
+    display:none;
+    background-color: #ccc;
+    width: 400px;
+    height: 48px;
+    color: #263746;
+}
+.CTR-button span {
+    padding: 17px 0 0 50px;
+    display: inline-block;
+}

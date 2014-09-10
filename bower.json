@@ -1,0 +1,8 @@
+{
+  "name": "resizing-blocks-protoype",
+  "private": true,
+  "dependencies": {
+    "jquery": "~1.11.1",
+    "velocity": "~1.0.0"
+  }
+}
