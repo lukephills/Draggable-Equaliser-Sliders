@@ -3,6 +3,8 @@
   "private": true,
   "dependencies": {
     "jquery": "~1.11.1",
-    "velocity": "~1.0.0"
+    "velocity": "~1.0.0",
+    "jquery.ui": "~1.11.1",
+    "jquery-ui": "~1.11.1"
   }
 }

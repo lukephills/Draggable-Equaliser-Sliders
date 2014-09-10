@@ -12,8 +12,8 @@
 
 }
 
-$blockColors: red, orange, yellow, green, blue, purple;
-
+$blockColors: rgb(114, 148, 191), rgb(191, 114, 179), rgb(191, 128, 114), rgb(114, 191, 136), rgb(115, 114, 191) , rgb(144, 191, 114);
+$sliderWidth: 90%;
 
 body {
 
@@ -36,7 +36,7 @@ body {
     .block {
         width: 100px;
         height: 300px;
-        position: absolute;
+        float: left;
         bottom: 0;
         border-radius: 1px;
 
@@ -45,7 +45,7 @@ body {
 
     @for $i from 1 through length($blockColors) {
         .block:nth-child(#{length($blockColors)}n+#{$i}) {
-            left: 100px * $i;
+            // left: 100px * $i;
             .ui-slider-range {
                 background: nth($blockColors, $i);
             }
@@ -53,9 +53,6 @@ body {
     }
 
 }
-
-
-
 
 
 
@@ -76,9 +73,9 @@ body {
     position: absolute;
     text-align: center;
     border: none;
-  text-decoration: none;
+    text-decoration: none;
     bottom: 0%;
-  cursor: ns-resize;
+    cursor: ns-resize;
 }
 .ui-slider-vertical .ui-slider-handle {
     margin: 0 0 8px 0;
@@ -102,14 +99,7 @@ body {
     border: none;
 }
 
-.CTR-button {
-    display:none;
-    background-color: #ccc;
-    width: 400px;
-    height: 48px;
-    color: #263746;
-}
-.CTR-button span {
-    padding: 17px 0 0 50px;
-    display: inline-block;
+.ui-slider-vertical .ui-slider-range {
+    left: (100 - $sliderWidth)/2;
+    width: $sliderWidth;
 }

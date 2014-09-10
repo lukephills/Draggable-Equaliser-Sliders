@@ -2,144 +2,122 @@ $(window).load(function(){
 	'use strict';
 
 
-	// VARIABLES
-	// var maxHeight = 300,
-	// 	minHeight = 50,
-		// var numberOfBlocks = 6;
+	var amountOfDivs = 5;
+	var startHeight = 50;
+	var container = document.getElementById('container');
+	var containerWidth = container.offsetWidth;
+	var containerHeight = container.offsetHeight;
+
+	// Math variables
+	var i, a, b, x;
 
 
 
 
+	function drawBlocks () { 
 
+		var blockWidth = containerWidth/amountOfDivs;
+
+		for (x = 1; x <= amountOfDivs; x++) {
+			// create a new div element 
+			// and give it some content 
+
+			var newDiv = document.createElement('div');
+			newDiv.classList.add('block'); 
+			newDiv.setAttribute('id', x);
+			newDiv.setAttribute('style', 'width:'+blockWidth+'px;');
+
+			container.appendChild(newDiv);
+
+		}
+	}
+
+	
+
+	function setSliders(){
 		// Start of bar dragging using jquery UI slider
 
-	$('.block').each(function() {
-		$(this).slider({
-	      range: 'min',
-	      value: 150,
-	      min: 0,
-	      max: 300,
-	      animate: true,
-	      orientation: 'vertical',
-	      slide: function( event, ui ) {
+		$('.block').each(function() {
+			$(this).slider({
+		      range: 'min',
+		      value: startHeight,
+		      min: 0,
+		      max: containerHeight,
+		      orientation: 'vertical',
+		      slide: function( event, ui ) {
+
+		      	// Set value for each bar when dragged
+		      	$('.ui-slider-handle').each(function(){
+
+			      	changeValues(event.target.id, ui.value);
+
+		      	});
+		      }
+		    });  
+	    }); 
+
+	     
+	}
 
 
-	      	// Set value for each bar when dragged
-	      	$('.ui-slider-handle').each(function(){
 
+	function changeValues(id, value) {
 
-		      	changeValues(event, ui);
+		var thisDiv = parseInt(id);
 
-	      	});
-	      }
-	    });
-    	$('.ui-slider-handle').attr('data-acr', 33 + '%');	// set intial value	    
-    }); 
-	
-	
+			for (i = 1; i <= amountOfDivs; i++){
 
-	
+				// MATHS
+				a = 600 - (i * 50);
 
+				if ((thisDiv-amountOfDivs === 0) || (thisDiv-1 === 0)){
+					// End Block - Make b a higher value
+					b = 1 * (0.5 / i);
 
-	function changeValues(event, ui) {
+				} else {
 
-		var thisDiv = parseInt(event.target.id);
+					b = 0.8 * (0.5 / i);
 
-
-			if (thisDiv === 1) {
-				$('#2').slider({ animate:true, value: ui.value/1.5 });
-				$('#3').slider({ value: ui.value/2 });
-				$('#4').slider({ value: ui.value/5 });
-				$('#5').slider({ value: ui.value/10 });
-				$('#6').slider({ value: ui.value/15 });
-			} 
-
-			if (thisDiv === 2) {
-				$('#1, #3').slider({value: ui.value/1.5 });
-				$('#4').slider({ value: ui.value/2 });
-				$('#5').slider({ value: ui.value/5 });
-				$('#6').slider({ value: ui.value/10 });
-			} 
-
-			if (thisDiv === 3) {
-
-				if (ui.value <= 150){
-					console.log('less than 150');
-
-
-				} else if (ui.value > 150) {
-					console.log('more than 150');
 				}
 
-
-				// $('#2, #4').slider({ value: ui.value/1.5 });
-				// $('#1, #5').slider({ value: ui.value/2 });
-				// $('#6').slider({ value: ui.value/5});
-			} 
-
-			if (thisDiv === 4) {
-				$('#3, #5').slider({ value: ui.value/1.5 });
-				$('#2, #6').slider({ value: ui.value/2 });
-				$('#1').slider({ value: ui.value/5 });
-			} 
-
-			if (thisDiv === 5) {
-				$('#4, #6').slider({ value: ui.value/1.5 });
-				$('#3').slider({ value: ui.value/2 });
-				$('#2').slider({ value: ui.value/5 });
-				$('#1').slider({ value: ui.value/10 });
-			} 
-
-			if (thisDiv === 6) {
-				$('#5').slider({ value: ui.value/1.5 });
-				$('#4').slider({ value: ui.value/2 });
-				$('#3').slider({ value: ui.value/5 });
-				$('#2').slider({ value: ui.value/10 });
-				$('#1').slider({ value: ui.value/15 });
-			} 
-
-			
-		
-
-
-  		// for (var i = 1; i <= numberOfBlocks; i++){
-
-  		// 	if (i !== thisDiv) {
-
-  		// 		if (thisDiv === 3){
-  		// 			$('#'+i).slider({ value: ui.value/(thisDiv/1.5) });
-  		// 		}
-
-
-
-  		// 		if ((thisDiv - i === 1) || (thisDiv - i === -1)) {
-  		// 			// Next to it
-  		// 			$('#'+i).slider({ value: ui.value/(thisDiv/1.5) });
-  		// 			$('#'+i+' span').attr('data-acr', (parseInt(ui.value/3)) + '%');
-
-  		// 		} else if ((thisDiv - i === 2) || (thisDiv - i === -2)){
-  		// 			// Two Away
-  		// 			// $('#'+i).slider({ value: ui.value/(i) });
-  		// 			// $('#'+i+' span').attr('data-acr', (parseInt(ui.value/3)) + '%');
-  		// 		} else if (thisDiv === i){
-  		// 			// We're dragging this div
-
-  		// 		}
-
-  		// 		// $('#'+i).slider({ value: ui.value/(i) });
-  		// 		// $('#'+i+' span').attr('data-acr', (parseInt(ui.value/(i+1)/3)) + '%');
-
-  		// 	} else {
-
-  				
-
-  		// 	}
-  		// }
-		
+				// Set the slider values
+				$('#' + (thisDiv - i) + ', #' + (i + thisDiv))
+					.slider({
+						value: (a - value) * b
+					});
+			}
 	} 
 
 
+	// Change amount of blocks
+	$( '.amountOfDivsSelect' ).change(function() {
+
+		// Set new amount of divs
+		amountOfDivs = $('.amountOfDivsSelect').val();
+
+		// Clear Everything inside container
+		$( '#container' ).empty();
+
+		// Reset
+	  	init();
+	});
 
 
+
+
+	function init(){
+
+		// drawBlocks	
+		drawBlocks();
+
+		// setup slider functionality 
+		setSliders();
+
+	}
+
+
+
+	// Everything is definied - START
+	init();
 
 });
